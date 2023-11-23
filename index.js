@@ -1,18 +1,50 @@
 const $RoutineBtn = document.querySelector("#RTBT") 
 const $WORKBtn = document.querySelector("#CHBT") 
-
-
+let $Routine = document.querySelector("#Myroutine")
+let $Work = document.querySelector("#ChoiceWork")
 
 function RoutineBtnclick() {
-    let $Routine = document.querySelector("#Myroutine")
-    
+    if($Routine.style.display =="none" && $Work.style.display =="none") {
+        $Routine.style.display = "block";
+        console.log("RtbtnOn")
+        const $Form1 = document.querySelector("#routineForm")
+        $Form1.innerHTML = 
+        `<strong>민기님의 루틴</strong><input id ="plus_Routine "type = "button" value="추가"></input>
+
+            <p>전체 1개</p>
+
+            <div id="save_Routine"> 
+             루틴 목록            
+            </div>
+        `
+    }
+    else {
+        $Routine.style.display = "none"
+        console.log("RtbtnOff")
+    }
 }
 
 function WorkBtnclick() {
-    let $Work = document.querySelector("#ChoiceWork")
-    console.log($Work)
+    if($Work.style.display =="none" && $Routine.style.display =="none") {
+        $Work.style.display = "block";
+        console.log("WorkbtnOn")
+        const $Form2 = document.querySelector("#WorkForm")
+        $Form2.innerHTML = 
+        `<input type="text id="plus_Workout Placeholder="찾으시는 운동검색"></input>
+        <div id="Select">
+        <input type="button" value="북마크✨">
+        </input><input type="button" value="하체"></input><input type="button" value="가슴"></input><input type="button" value="등"></input>
+        </div>
+        
+        `
+    }
+    else {
+        $Work.style.display = "none"
+        console.log("WorkbtnOff")
+    }
 }
 
 $RoutineBtn.addEventListener("click", RoutineBtnclick)
 
 $WORKBtn.addEventListener("click", WorkBtnclick)
+
