@@ -1,3 +1,50 @@
-#Myroutine{
-   display: none;
+body {
+   font-family: 'Arial', sans-serif;
+   background-color: #f0f0f0;
+}
+
+header {
+   background-color: rgb(108, 189, 243);
+   color: #fff;
+   padding: 20px;
+   text-align: center;
+}
+
+header h1 {
+   margin: 0;
+}
+
+header p {
+   margin: 0;
+   font-size: 1.2em;
+}
+
+.today_work {
+   margin-top: 20px;
+   text-align: center;
+}
+
+.today_work p {
+   font-size: 1.3em;
+}
+
+.today_work button {
+   margin: 10px;
+   padding: 10px 20px;
+   font-size: 1.2em;
+   background-color: rgb(25, 214, 243);
+   color: #fff;
+   border-radius: 10px;
+   cursor: pointer;
+}
+
+.today_work button:hover {
+   background-color: #ff0000;
+}
+
+#Myroutine, #ChoiceWork {
+   margin: 20px;
+   padding: 20px;
+   border: 1px solid #333;
+   background-color: #fff;
 }
