@@ -1,34 +1,12 @@
-const $RoutineBtn = document.querySelector("#RTBT") 
+
 const $WORKBtn = document.querySelector("#CHBT") 
-let $Routine = document.querySelector("#Myroutine")
 let $Work = document.querySelector("#ChoiceWork")
-let RoutineCount = 0;
+
+
+
+
 
 // 불러오기 / 운동선택하기 버튼 내용 로직 
-function RoutineBtnclick() {
-    if($Routine.style.display =="none" && $Work.style.display =="none") {
-        $Routine.style.display = "block";
-        console.log("RtbtnOn")
-        const $Form1 = document.querySelector("#routineForm")
-      
-        $Form1.innerHTML = 
-        `<strong>민기님의 루틴</strong><input id="plus_Routine" type="button" value="추가"></input>
-
-            <p>전체 ${RoutineCount}개</p>
-
-            <div id="save_Routine"> 
-                루틴 목록            
-            </div>
-        `
-        const $addButton = document.querySelector("#plus_Routine");
-        $addButton.addEventListener("click", showRoutineForm)
-    }
-    else {
-        $Routine.style.display = "none"
-        console.log("RtbtnOff")
-    }
-}
-
 function WorkBtnclick() {
     if($Work.style.display =="none" && $Routine.style.display =="none") {
         $Work.style.display = "block";
@@ -49,7 +27,7 @@ function WorkBtnclick() {
     }
 }
 
-$RoutineBtn.addEventListener("click", RoutineBtnclick)
+
 
 $WORKBtn.addEventListener("click", WorkBtnclick)
 

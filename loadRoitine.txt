@@ -1,0 +1,110 @@
+// 어떤 운동 목록 찾고있는지 버튼 
+let button_Switch = 0;
+// bookmark 버튼내용 구현
+function bookmark(){
+    button_Switch = 1;
+    console.log(button_Switch)
+    const $Form1 = document.querySelector("#routineForm");
+    if(button_Switch == 1){
+    $Form1.innerHTML = `
+    <div>
+    <h2>북마크에 저장된 운동이 없습니다.</h2>
+    <span>자주 수행하는 운동들을 북마크에 담아보세요</span>
+    </div>
+    <div>
+    <input id="bookmarkplus_work"type="button" value="운동 추가하기"></input>
+    </div>
+    `
+} else {
+    
+}
+}
+
+// leg 버튼내용 구현
+function leg(){
+  button_Switch = 2;
+  console.log(button_Switch)
+  const $Form1 = document.querySelector("#routineForm");
+  if(button_Switch == 2){
+  $Form1.innerHTML = `
+  <div class="">
+    <button id="squat">스쿼트</button>
+    <button id="leg_extension">레그익스텐션</button>
+    <button id="lunge">런지</button>
+    <button id="conventionnal_deadlift">컨벤셔널 데드리프트</button>
+  </div>
+  `
+
+  const $exerciseList = document.createElement("div");
+  // 새로 생성된 div태그에 id값주기?
+  $exerciseList.setAttribute("id","exerciseList")
+  $Form1.appendChild($exerciseList)
+
+
+  const $squat = document.querySelector("#squat");
+  $squat.addEventListener("click", () => addExercise("스쿼트"));
+
+  const $leg_extension = document.querySelector("#leg_extension");
+  $leg_extension.addEventListener("click", () => addExercise("레그익스텐션"));
+
+  const $lunge = document.querySelector("#lunge");
+  $lunge.addEventListener("click", () => addExercise("런지"));
+
+  const $conventionnal_deadlift = document.querySelector("#conventionnal_deadlift");
+  $conventionnal_deadlift.addEventListener("click", () => addExercise("컨벤셔널 데드리프트"));
+
+  }
+} 
+
+// chest 버튼내용 구현
+function chest(){
+  button_Switch = 3;
+  console.log(button_Switch)
+  const $Form1 = document.querySelector("#routineForm");
+  if(button_Switch == 3){
+  $Form1.innerHTML = `
+  <div>
+  <button id="bench_press">벤치프레스</button>
+  <button id="chest_fly">체스트 플라이</button>
+  <button id="incine_benchpress">인클라인 벤치프레스</button>
+  <button id="chest_press">체스트 프레스</button>
+  </div>
+  `
+  }
+}
+
+// back 버튼내용 구현
+function back(){
+  button_Switch = 4;
+  console.log(button_Switch)
+  const $Form1 = document.querySelector("#routineForm");
+  if(button_Switch == 4){
+  $Form1.innerHTML = `
+  <div>
+  <button id="barbelrow">바벨로우</button>
+  <button id="latfulldown">렛풀다운</button>
+  <button id="seatedrow">시티드로우</button>
+  <button id="pullup">풀업</button>
+  </div>
+  `
+  }
+
+ 
+}
+
+// 선택된 운동 목록 저장 배열
+let selectedExercises = [];
+
+// 운동 추가 함수
+function addExercise(exercise) {
+  console.log(exercise)
+  selectedExercises.push(exercise);
+  updateExerciseList();
+}
+
+// 운동 목록 업데이트 함수
+function updateExerciseList() {
+  const $exerciseList = document.querySelector("#exerciseList");
+  $exerciseList.innerHTML = selectedExercises.map((exercise) => `<li>${exercise}</li>`).join("");
+  
+}
