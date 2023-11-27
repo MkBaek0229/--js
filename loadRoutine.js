@@ -147,19 +147,50 @@ function save(routineName) {
         <ul class="exercise_list">
           ${selectedRoutine.routineList.map((exercise) => `<li>${exercise}</li>`).join("")}
         </ul>
+
+        <div style="margin: 100px">
+          <h1 id="stopwatch">
+              00:00:00
+          </h1>
+        <div>
+        <button id="startClock">start</button>
+        <button onclick="stopClock()">stop</button>
+        <button onclick="resetClock()">reset</button>
+        </div>
       </div>`;
   });
-});
+  
+})
 
+// 스톱워치 관련 변수와 함수들
+let timerld; 
+let time = 0;
+let hour, min, sec;
+
+
+//시계 시작 - 재귀호출로 반복실행
+function startClock() {
+  printTime();
+  timerld = setTimeout(startClock, 1000);
+}
+
+const $stopwatch = document.querySelector("#stopwatch")
+  function printTime() {
+    time++;
+    $stopwatch.innerText = getTimeFormatString();
+  }
+
+// 시간(int)을 시, 분, 초 문자열로 변환
+function getTimeFormatString() {
+  hour = parseInt(String(time / (60 * 60)));
+  min = parseInt(String((time - (hour * 60 * 60)) / 60));
+  sec = time % 60;
+
+  return String(hour).padStart(2, '0') + ":" + String(min).padStart(2, '0') + ":" + String(sec).padStart(2, '0');
+}
 
 }
 
-/*function deleteToDo(event) {
-  const li = event.target.parentElement;
-  li.remove();
-  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
-  saveToDos();
-}*/
 
 // 어떤 운동 목록 찾고있는지 버튼
 let button_Switch = 0;
