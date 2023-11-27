@@ -129,20 +129,27 @@ function save(routineName) {
     $save_routine.addEventListener("click", (event) => console.log(event))
   });
 
-  const $work_start = document.querySelectorAll("#work_start")
+  const $work_start = document.querySelectorAll("#work_start");
   $work_start.forEach((startbutton) => {
-    startbutton.addEventListener("click" , () => {
-      const $Form1 = document.querySelector("#routineForm");
-      $Form1.innerHTML = `<div>
-          <h1>오늘의 운동</h1>
-        
-        
-        
-        
-        
-        </div>`;
-    })
-  })
+  startbutton.addEventListener("click", () => {
+    const routineId = startbutton.parentElement.id;
+    const routineId2 = startbutton.parentElement
+    console.log(routineId2)
+    console.log(routineId)
+    const selectedRoutine = Routine_list.find((routine) => routine.id == routineId);
+
+    const $Form1 = document.querySelector("#routineForm");
+    $Form1.innerHTML = `
+      <div>
+        <h1>오늘의 운동 - ${selectedRoutine.routineName}</h1>
+        <ul class="exercise_list">
+          ${selectedRoutine.routineList.map((exercise) => `<li>${exercise}</li>`).join("")}
+        </ul>
+      </div>`;
+  });
+});
+
+
 }
 
 /*function deleteToDo(event) {
