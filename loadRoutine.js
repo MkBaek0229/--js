@@ -117,7 +117,7 @@ function save(routineName) {
   const $first_ul = document.querySelector(".first_ul");
   $first_ul.innerHTML = Routine_list.map(
     (Routine) =>
-      `<div class="Routine_click" id="${Routine.id}">${Routine.routineName}${Routine.routineList}</div>`
+      `<ol id="${Routine.id}"><li class="Routine_click">${Routine.routineName}<div id="saved_routinelist">${Routine.routineList}</div></li></ol>`
   ).join("");
 
   const $addButton = document.querySelector("#plus_Routine");
@@ -126,9 +126,7 @@ function save(routineName) {
   const $save_routines = document.querySelectorAll(".Routine_click");
   console.log($save_routines);
   $save_routines.forEach(($save_routine) => {
-    $save_routine.addEventListener("click", (event) => {
-      console.log(event);
-    });
+    $save_routine.addEventListener("click", (event) => console.log(event))
   });
 }
 
