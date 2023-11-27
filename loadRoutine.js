@@ -109,15 +109,15 @@ function save(routineName) {
       <p>전체 ${RoutineCount}개</p>
 
       <div class="first_ul" id="save_Routine"> 
-          루틴 목록 
+          <h2>루틴 목록 <h2>
           
         
       </div>
   `;
   const $first_ul = document.querySelector(".first_ul");
-  $first_ul.innerHTML = Routine_list.map(
+  $first_ul.innerHTML += Routine_list.map(
     (Routine) =>
-      `<ol id="${Routine.id}"><li class="Routine_click">${Routine.routineName}<div id="saved_routinelist">${Routine.routineList}</div></li></ol>`
+      `<ol id="${Routine.id}"><li class="Routine_click">${Routine.routineName}<div id="saved_routinelist">${Routine.routineList}</div></li><button id="work_start">운동시작</button></ol>`
   ).join("");
 
   const $addButton = document.querySelector("#plus_Routine");
@@ -128,6 +128,21 @@ function save(routineName) {
   $save_routines.forEach(($save_routine) => {
     $save_routine.addEventListener("click", (event) => console.log(event))
   });
+
+  const $work_start = document.querySelectorAll("#work_start")
+  $work_start.forEach((startbutton) => {
+    startbutton.addEventListener("click" , () => {
+      const $Form1 = document.querySelector("#routineForm");
+      $Form1.innerHTML = `<div>
+          <h1>오늘의 운동</h1>
+        
+        
+        
+        
+        
+        </div>`;
+    })
+  })
 }
 
 /*function deleteToDo(event) {
