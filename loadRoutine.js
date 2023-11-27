@@ -108,16 +108,16 @@ function save(routineName) {
 
       <p>전체 ${RoutineCount}개</p>
 
-      <div class="first_ul" id="save_Routine"> 
+      <div id="save_Routine"> 
           <h2>루틴 목록 <h2>
-          
-        
+          <ol class="first_ul">          
+          </ol>
       </div>
   `;
   const $first_ul = document.querySelector(".first_ul");
   $first_ul.innerHTML += Routine_list.map(
     (Routine) =>
-      `<ol id="${Routine.id}"><li class="Routine_click">${Routine.routineName}<div id="saved_routinelist">${Routine.routineList}</div></li><button id="work_start">운동시작</button></ol>`
+      `<li id="${Routine.id}" class="Routine_click">${Routine.routineName}<div id="saved_routinelist">${Routine.routineList}</div><button id="work_start">운동시작</button></li>`
   ).join("");
 
   const $addButton = document.querySelector("#plus_Routine");
@@ -132,10 +132,12 @@ function save(routineName) {
   const $work_start = document.querySelectorAll("#work_start");
   $work_start.forEach((startbutton) => {
   startbutton.addEventListener("click", () => {
+    // click(button)된 부모태그의 id?
     const routineId = startbutton.parentElement.id;
     const routineId2 = startbutton.parentElement
     console.log(routineId2)
     console.log(routineId)
+    // Routine_list 배열안에 id가 routineId와 일치하는객체를 찾아 변수에할당
     const selectedRoutine = Routine_list.find((routine) => routine.id == routineId);
 
     const $Form1 = document.querySelector("#routineForm");
