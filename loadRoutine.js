@@ -1,12 +1,13 @@
+window.addEventListener("load", RoutineBtnclick);
+
 const $RoutineBtn = document.querySelector("#RTBT");
 let $Routine = document.querySelector("#Myroutine");
 let RoutineCount = 0;
 
 
+let Routine_list = JSON.parse(localStorage.getItem("key")) || [];
 
-let Routine_list = [];
 
-const saveRoutine = JSON.parse(localStorage.getItem("key"))
 
 // 불러오기 버튼 눌렀을시 최초
 function RoutineBtnclick() {
@@ -15,24 +16,36 @@ function RoutineBtnclick() {
     console.log("RtbtnOn");
     const $Form1 = document.querySelector("#routineForm");
 
+    localStorage.setItem("key" , JSON.stringify(Routine_list))
+    const saveRoutine = JSON.parse(localStorage.getItem("key"))
+
     $Form1.innerHTML = `<strong>민기님의 루틴</strong><input id="plus_Routine" type="button" value="추가"></input>
 
-          <p>전체 ${RoutineCount}개</p>
+    <p>전체 ${saveRoutine.length}개</p>
 
           <div id="save_Routine"> 
-              루틴 목록 
+              <h2>루틴 목록 
               <ol class="first_ul">
+              ${saveRoutine.map((saveRoutine) => `<li id="${saveRoutine.id}" class="Routine_click">${saveRoutine.routineName}${saveRoutine.routineList}<button id="work_start">운동시작</button></li>`).join(" ")}
               </ol>
-            
+              </h2>
           </div>
       `;
+    
     const $addButton = document.querySelector("#plus_Routine");
     $addButton.addEventListener("click", showRoutineForm);
   } else {
     $Routine.style.display = "none";
     console.log("RtbtnOff");
   }
+  const $work_start = document.querySelectorAll("#work_start");
+  $work_start.forEach((startbutton) => {
+  startbutton.addEventListener("click", () => startwork(startbutton));
+  startbutton.addEventListener("click", () => stopwacth() )
+})
 }
+
+
 
 $RoutineBtn.addEventListener("click", RoutineBtnclick);
 
@@ -110,25 +123,24 @@ function save(routineName) {
   // localstrogae에 저장해놓기? 문제! 문자형(string) 데이터 타입만 지원받음. 객체형 데이터를 어떻게 저장할까?
   // json 형태로 데이터를 읽고 쓰게하자.
   localStorage.setItem("key" , JSON.stringify(Routine_list))
-
-  console.log(Routine_list);
+  const saveRoutine = JSON.parse(localStorage.getItem("key"))
+  console.log(saveRoutine);
   const $Form1 = document.querySelector("#routineForm");
   $Form1.innerHTML = `<strong>민기님의 루틴</strong><input id="plus_Routine" type="button" value="추가"></input>
 
       <p>전체 ${RoutineCount}개</p>
 
       <div id="save_Routine"> 
-          <h2>루틴 목록 <h2>
+          <h2>루틴 목록 
           <ol class="first_ul">          
           </ol>
+          </h2>
       </div>
-  `;
+  `;  
   
   const $first_ul = document.querySelector(".first_ul");
-  $first_ul.innerHTML += Routine_list.map(
-    (Routine) =>
-      `<li id="${Routine.id}" class="Routine_click">${Routine.routineName}<div id="saved_routinelist">${Routine.routineList}</div><button id="work_start">운동시작</button></li>`
-  ).join("");
+  $first_ul.innerHTML += saveRoutine.map((saveRoutine) => `<li id="${saveRoutine.id}" class="Routine_click">${saveRoutine.routineName}${saveRoutine.routineList}<button id="work_start">운동시작</button></li>`).join(" ")
+  
 
   const $addButton = document.querySelector("#plus_Routine");
   $addButton.addEventListener("click", showRoutineForm);
