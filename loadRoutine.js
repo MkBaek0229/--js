@@ -152,17 +152,23 @@ $Form1.innerHTML = `
       ${selectedRoutine.routineList.map((exercise) => `<li>${exercise}</li>`).join("")}
     </ul>
     <div class="wrapper">
-      <h1>스톱워치</h1>
-      <p><span id="seconds">00</span> : <span id="centiseconds">00</span></p>
+      <h1>운동 진행 시간</h1>
+      <p><span id="minute">00</span> : <span id="seconds">00</span> : <span id="centiseconds">00</span></p>
       <button id="button-start">시작</button>
       <button id="button-stop">정지</button>
       <button id="button-reset">재시작</button>
     </div>
-    
+
   </div>`;
+
+
+  // 스톱워치 만들기 
+
   // 스톱워치를 이용하기 위한 변수들
-  let seconds = 0;      // seconds
-  let centiseconds = 0; // 1/100 seconds
+  let minute = 0; // minute 분단위
+  let seconds = 0;      // seconds 초단위 
+  let centiseconds = 0; // 1/100 seconds 밀리초단위?
+  let spanMiniute = document.getElementById('minute');
   let spanSeconds = document.getElementById('seconds');
   let spanCentiseconds = document.getElementById('centiseconds'); 
   let buttonStart = document.getElementById('button-start');
@@ -172,7 +178,7 @@ $Form1.innerHTML = `
 
   // 시작버튼 누를시 실행함수
 buttonStart.onclick = function() {
-  if(buttonStart.disabled == false) {     // start버튼이 활성화 되었다면(여러번 실행되는 것 방지)
+  if(buttonStart.disabled == false) {     // start버튼이 활성화 되었다면(여러번 실행되는 것 방지) == 비활성화상태가 아니라면
     interval = setInterval(startTimer, 10); // startTimer함수를 10/1000초마다 실행하겠다.
     buttonStart.disabled = true;      // start버튼을 비활성화 하기
   }
@@ -195,7 +201,7 @@ buttonReset.onclick = function() {
 }
  
 function startTimer() { // 1초, 2초......시간 계산하는 함수
-  centiseconds++;  // 1증가 // centiseconds = centiseconds + 1
+  centiseconds++;  // 1 증가 // centiseconds = centiseconds + 1
   if(centiseconds <= 9) spanCentiseconds.innerText = '0'+centiseconds;
   else spanCentiseconds.innerText = centiseconds;
  
@@ -205,6 +211,12 @@ function startTimer() { // 1초, 2초......시간 계산하는 함수
     else spanSeconds.innerText = seconds;
     centiseconds = 0;
     spanCentiseconds.innerText = '00';
+  } else if(seconds > 59) {
+    minute++; // 1분 상승
+    if(minute <= 9) spanMiniute.innerText = '0' + minute;
+    else spanMiniute.innerText = minute;
+    seconds = 0;
+    spanSeconds.innerText = '00';
   }
 }
 
