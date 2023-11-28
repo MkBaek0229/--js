@@ -2,7 +2,12 @@ const $RoutineBtn = document.querySelector("#RTBT");
 let $Routine = document.querySelector("#Myroutine");
 let RoutineCount = 0;
 
+
+
 let Routine_list = [];
+
+const saveRoutine = JSON.parse(localStorage.getItem("key"))
+
 // 불러오기 버튼 눌렀을시 최초
 function RoutineBtnclick() {
   if ($Routine.style.display == "none") {
@@ -102,6 +107,10 @@ function save(routineName) {
   };
   selectedExercises = [];
   Routine_list.push(newWorkObj);
+  // localstrogae에 저장해놓기? 문제! 문자형(string) 데이터 타입만 지원받음. 객체형 데이터를 어떻게 저장할까?
+  // json 형태로 데이터를 읽고 쓰게하자.
+  localStorage.setItem("key" , JSON.stringify(Routine_list))
+
   console.log(Routine_list);
   const $Form1 = document.querySelector("#routineForm");
   $Form1.innerHTML = `<strong>민기님의 루틴</strong><input id="plus_Routine" type="button" value="추가"></input>
@@ -114,6 +123,7 @@ function save(routineName) {
           </ol>
       </div>
   `;
+  
   const $first_ul = document.querySelector(".first_ul");
   $first_ul.innerHTML += Routine_list.map(
     (Routine) =>
@@ -161,6 +171,10 @@ $Form1.innerHTML = `
   </div>`;
 }
 
+
+// 운동 불러오기 폼에서 완료시간을 알게하기위한 배열변수선언 ??
+const clearworkarr = []
+
   // 스톱워치 만들기 
 function stopwacth() {
     // 스톱워치를 이용하기 위한 변수들
@@ -172,31 +186,31 @@ function stopwacth() {
     let spanCentiseconds = document.getElementById('centiseconds'); // 밀리초 
     let buttonStop = document.getElementById('button-stop');
     let buttonReset = document.getElementById('button-reset');
-    let interval;  // 1/100 초씩 자동실행되는 곳에 사용할 변수  
-    let clearwork = {
-      min : spanMiniute, 
-      sec : spanSeconds,
-      csec : spanCentiseconds,
-    }
+    let interval;  // 1/100 초씩 자동실행되는 곳에 사용할 변수   
   // 운동 시작하면 바로 타이머 시작 
     interval = setInterval(startTimer, 10); // startTimer함수를 10/1000초마다 실행하겠다.
    
   // 운동 완료 버튼을 누를시 실행함수
-  buttonStop.onclick = function() {
+  buttonStop.onclick = function(event) {
     clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
+    console.log(event);
+
      // 완료 눌린 시점 시간 저장해놓기
-    let clearMinute = spanSeconds.innerText;
-    let clearSeconds = spanSeconds.innerText;
+     let clearwork = {
+      min : spanMiniute.innerText,
+      sec : spanSeconds.innerText,
+      csec : spanCentiseconds.innerText,
+    }
   
-    alert(`운동을 완료했습니다. ${clearMinute}분 : ${clearSeconds}초`)
-   
-   
-   
-   
+    clearworkarr.push(clearwork);
 
 
+  // 완료 눌린 시점 시간 사용자에게 알리기.
+    alert(`운동을 완료했습니다. ${clearwork.min}분 : ${clearwork.sec}초`)
+   
   }
    
+
   // 운동 시간 초기화 버튼 누를시 실행함수
   buttonReset.onclick = function() {
     clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
