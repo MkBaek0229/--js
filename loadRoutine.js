@@ -131,65 +131,85 @@ function save(routineName) {
 
   const $work_start = document.querySelectorAll("#work_start");
   $work_start.forEach((startbutton) => {
-  startbutton.addEventListener("click", () => {
-    // click(button)된 부모태그의 id?
-    const routineId = startbutton.parentElement.id;
-    const routineId2 = startbutton.parentElement
-    console.log(routineId2)
-    console.log(routineId)
-    // Routine_list 배열안에 id가 routineId와 일치하는객체를 찾아 변수에할당
-    const selectedRoutine = Routine_list.find((routine) => routine.id == routineId);
-
-    const $Form1 = document.querySelector("#routineForm");
-    $Form1.innerHTML = `
-      <div>
-        <h1>오늘의 운동 - ${selectedRoutine.routineName}</h1>
-        <ul class="exercise_list">
-          ${selectedRoutine.routineList.map((exercise) => `<li>${exercise}</li>`).join("")}
-        </ul>
-
-        <div style="margin: 100px">
-          <h1 id="stopwatch">
-              00:00:00
-          </h1>
-        <div>
-        <button id="startClock">start</button>
-        <button onclick="stopClock()">stop</button>
-        <button onclick="resetClock()">reset</button>
-        </div>
-      </div>`;
-  });
+  startbutton.addEventListener("click", () => startwork(startbutton));
   
-})
-
-// 스톱워치 관련 변수와 함수들
-let timerld; 
-let time = 0;
-let hour, min, sec;
-
-
-//시계 시작 - 재귀호출로 반복실행
-function startClock() {
-  printTime();
-  timerld = setTimeout(startClock, 1000);
+  })
 }
 
-const $stopwatch = document.querySelector("#stopwatch")
-  function printTime() {
-    time++;
-    $stopwatch.innerText = getTimeFormatString();
+function startwork(startbutton) {
+  // click(button)된 부모태그의 id?
+const routineId = startbutton.parentElement.id;
+const routineId2 = startbutton.parentElement
+console.log(routineId2)
+console.log(routineId)
+// Routine_list 배열안에 id가 routineId와 일치하는객체를 찾아 변수에할당
+const selectedRoutine = Routine_list.find((routine) => routine.id == routineId);
+const $Form1 = document.querySelector("#routineForm");
+$Form1.innerHTML = `
+  <div>
+    <h1>오늘의 운동 - ${selectedRoutine.routineName}</h1>
+    <ul class="exercise_list">
+      ${selectedRoutine.routineList.map((exercise) => `<li>${exercise}</li>`).join("")}
+    </ul>
+    <div class="wrapper">
+      <h1>스톱워치</h1>
+      <p><span id="seconds">00</span> : <span id="centiseconds">00</span></p>
+      <button id="button-start">시작</button>
+      <button id="button-stop">정지</button>
+      <button id="button-reset">재시작</button>
+    </div>
+    
+  </div>`;
+  // 스톱워치를 이용하기 위한 변수들
+  let seconds = 0;      // seconds
+  let centiseconds = 0; // 1/100 seconds
+  let spanSeconds = document.getElementById('seconds');
+  let spanCentiseconds = document.getElementById('centiseconds'); 
+  let buttonStart = document.getElementById('button-start');
+  let buttonStop = document.getElementById('button-stop');
+  let buttonReset = document.getElementById('button-reset');
+  let interval;  // 1/100 초씩 자동실행되는 곳에 사용할 변수  
+
+  // 시작버튼 누를시 실행함수
+buttonStart.onclick = function() {
+  if(buttonStart.disabled == false) {     // start버튼이 활성화 되었다면(여러번 실행되는 것 방지)
+    interval = setInterval(startTimer, 10); // startTimer함수를 10/1000초마다 실행하겠다.
+    buttonStart.disabled = true;      // start버튼을 비활성화 하기
   }
-
-// 시간(int)을 시, 분, 초 문자열로 변환
-function getTimeFormatString() {
-  hour = parseInt(String(time / (60 * 60)));
-  min = parseInt(String((time - (hour * 60 * 60)) / 60));
-  sec = time % 60;
-
-  return String(hour).padStart(2, '0') + ":" + String(min).padStart(2, '0') + ":" + String(sec).padStart(2, '0');
+}
+ 
+// 정지버튼을 누를시 실행함수
+buttonStop.onclick = function() {
+  clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
+  buttonStart.disabled = false; // start 버튼을 활성화 하기
+}
+ 
+// 재시작 버튼 누를시 실행함수
+buttonReset.onclick = function() {
+  buttonStart.disabled == false;  // start 버튼을 활성화하기
+  clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
+  centiseconds = 0;
+  seconds = 0;
+  spanCentiseconds.innerText = '00';
+  spanSeconds.innerText = '00';
+}
+ 
+function startTimer() { // 1초, 2초......시간 계산하는 함수
+  centiseconds++;  // 1증가 // centiseconds = centiseconds + 1
+  if(centiseconds <= 9) spanCentiseconds.innerText = '0'+centiseconds;
+  else spanCentiseconds.innerText = centiseconds;
+ 
+  if(centiseconds > 99) {
+    seconds++; // 1초 상승
+    if(seconds <= 9) spanSeconds.innerText = '0' + seconds;
+    else spanSeconds.innerText = seconds;
+    centiseconds = 0;
+    spanCentiseconds.innerText = '00';
+  }
 }
 
 }
+
 
 
 // 어떤 운동 목록 찾고있는지 버튼
