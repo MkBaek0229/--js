@@ -5,7 +5,7 @@ let RoutineCount = 0;
 let Routine_list = [];
 // 불러오기 버튼 눌렀을시 최초
 function RoutineBtnclick() {
-  if ($Routine.style.display == "none" && $Work.style.display == "none") {
+  if ($Routine.style.display == "none") {
     $Routine.style.display = "block";
     console.log("RtbtnOn");
     const $Form1 = document.querySelector("#routineForm");
@@ -132,7 +132,7 @@ function save(routineName) {
   const $work_start = document.querySelectorAll("#work_start");
   $work_start.forEach((startbutton) => {
   startbutton.addEventListener("click", () => startwork(startbutton));
-  
+  startbutton.addEventListener("click", () => stopwacth() )
   })
 }
 
@@ -154,75 +154,79 @@ $Form1.innerHTML = `
     <div class="wrapper">
       <h1>운동 진행 시간</h1>
       <p><span id="minute">00</span> : <span id="seconds">00</span> : <span id="centiseconds">00</span></p>
-      <button id="button-start">시작</button>
-      <button id="button-stop">정지</button>
-      <button id="button-reset">재시작</button>
+      <button id="button-stop">운동 완료</button>
+      <button id="button-reset">운동 시간 초기화</button>
     </div>
 
   </div>`;
-
+}
 
   // 스톱워치 만들기 
-
-  // 스톱워치를 이용하기 위한 변수들
-  let minute = 0; // minute 분단위
-  let seconds = 0;      // seconds 초단위 
-  let centiseconds = 0; // 1/100 seconds 밀리초단위?
-  let spanMiniute = document.getElementById('minute');
-  let spanSeconds = document.getElementById('seconds');
-  let spanCentiseconds = document.getElementById('centiseconds'); 
-  let buttonStart = document.getElementById('button-start');
-  let buttonStop = document.getElementById('button-stop');
-  let buttonReset = document.getElementById('button-reset');
-  let interval;  // 1/100 초씩 자동실행되는 곳에 사용할 변수  
-
-  // 시작버튼 누를시 실행함수
-buttonStart.onclick = function() {
-  if(buttonStart.disabled == false) {     // start버튼이 활성화 되었다면(여러번 실행되는 것 방지) == 비활성화상태가 아니라면
+function stopwacth() {
+    // 스톱워치를 이용하기 위한 변수들
+    let minute = 0; // minute 분단위
+    let seconds = 0;      // seconds 초단위 
+    let centiseconds = 0; // 1/100 seconds 밀리초단위?
+    let spanMiniute = document.getElementById('minute'); // 분 
+    let spanSeconds = document.getElementById('seconds'); //초
+    let spanCentiseconds = document.getElementById('centiseconds'); // 밀리초 
+    let buttonStop = document.getElementById('button-stop');
+    let buttonReset = document.getElementById('button-reset');
+    let interval;  // 1/100 초씩 자동실행되는 곳에 사용할 변수  
+    let clearwork = {
+      min : spanMiniute, 
+      sec : spanSeconds,
+      csec : spanCentiseconds,
+    }
+  // 운동 시작하면 바로 타이머 시작 
     interval = setInterval(startTimer, 10); // startTimer함수를 10/1000초마다 실행하겠다.
-    buttonStart.disabled = true;      // start버튼을 비활성화 하기
+   
+  // 운동 완료 버튼을 누를시 실행함수
+  buttonStop.onclick = function() {
+    clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
+     // 완료 눌린 시점 시간 저장해놓기
+    let clearMinute = spanSeconds.innerText;
+    let clearSeconds = spanSeconds.innerText;
+  
+    alert(`운동을 완료했습니다. ${clearMinute}분 : ${clearSeconds}초`)
+   
+   
+   
+   
+
+
   }
-}
- 
-// 정지버튼을 누를시 실행함수
-buttonStop.onclick = function() {
-  clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
-  buttonStart.disabled = false; // start 버튼을 활성화 하기
-}
- 
-// 재시작 버튼 누를시 실행함수
-buttonReset.onclick = function() {
-  buttonStart.disabled == false;  // start 버튼을 활성화하기
-  clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
-  centiseconds = 0;
-  seconds = 0;
-  spanCentiseconds.innerText = '00';
-  spanSeconds.innerText = '00';
-}
- 
-function startTimer() { // 1초, 2초......시간 계산하는 함수
-  centiseconds++;  // 1 증가 // centiseconds = centiseconds + 1
-  if(centiseconds <= 9) spanCentiseconds.innerText = '0'+centiseconds;
-  else spanCentiseconds.innerText = centiseconds;
- 
-  if(centiseconds > 99) {
-    seconds++; // 1초 상승
-    if(seconds <= 9) spanSeconds.innerText = '0' + seconds;
-    else spanSeconds.innerText = seconds;
+   
+  // 운동 시간 초기화 버튼 누를시 실행함수
+  buttonReset.onclick = function() {
+    clearInterval(interval); // 1/100초마다 실행되는 함수 멈춤
     centiseconds = 0;
-    spanCentiseconds.innerText = '00';
-  } else if(seconds > 59) {
-    minute++; // 1분 상승
-    if(minute <= 9) spanMiniute.innerText = '0' + minute;
-    else spanMiniute.innerText = minute;
     seconds = 0;
+    spanCentiseconds.innerText = '00';
     spanSeconds.innerText = '00';
+    interval = setInterval(startTimer, 10); // starttimer 함수 재실행
+  }
+   
+  function startTimer() { // 1초, 2초......시간 계산하는 함수
+    centiseconds++;  // 1 증가 // centiseconds = centiseconds + 1
+    if(centiseconds <= 9) spanCentiseconds.innerText = '0'+centiseconds;
+    else spanCentiseconds.innerText = centiseconds;
+   
+    if(centiseconds > 99) {
+      seconds++; // 1초 상승
+      if(seconds <= 9) spanSeconds.innerText = '0' + seconds;
+      else spanSeconds.innerText = seconds;
+      centiseconds = 0;
+      spanCentiseconds.innerText = '00';
+    } else if(seconds > 59) {
+      minute++; // 1분 상승
+      if(minute <= 9) spanMiniute.innerText = '0' + minute;
+      else spanMiniute.innerText = minute;
+      seconds = 0;
+      spanSeconds.innerText = '00';
+    }
   }
 }
-
-}
-
-
 
 // 어떤 운동 목록 찾고있는지 버튼
 let button_Switch = 0;
