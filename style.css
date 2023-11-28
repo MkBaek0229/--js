@@ -1,50 +1,308 @@
-body {
-   font-family: 'Arial', sans-serif;
-   background-color: #f0f0f0;
+
+* {
+ 
 }
 
-header {
-   background-color: rgb(108, 189, 243);
-   color: #fff;
-   padding: 20px;
-   text-align: center;
-}
-
+body,
 header h1 {
-   margin: 0;
+  margin: 0;
+  padding: 0;
 }
 
-header p {
-   margin: 0;
-   font-size: 1.2em;
+/*height of wave = h = 50px*/
+header {
+  background: linear-gradient(45deg, blueviolet, crimson);
+  height: 200px;
+  color: #fff;
+  padding: 8px;
+  padding-bottom: 50px; /*h*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
+
+header:before,
+header:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 25px; /*h/2*/
+  height: 50px; /*h*/
+  background: radial-gradient(closest-side, #fff, #fff 50%, transparent 50%);
+  /*or farthest-side*/
+  background-size: 50px 50px; /*h h*/
+  background-position: 0 25px; /*0 h/2*/
+  background-repeat: repeat-x;
+}
+
+header:after {
+  background: radial-gradient(
+    closest-side,
+    transparent,
+    transparent 50%,
+    #fff 50%
+  );
+  /*or farthest-side*/
+  background-size: 50px 50px; /*h h*/
+  background-position: 25px -25px; /*h/2 -h/2*/
+  background-repeat: repeat-x;
+  bottom: -25px;
+}
+
+header.animatedWave:before,
+header.animatedWave:after {
+  left: -50px; /*-h*/
+  animation: animateWave 0.2s linear infinite;
+}
+
+@keyframes animateWave {
+  to {
+    transform: translateX(50px);
+  }
+}
+
+
+
 
 .today_work {
-   margin-top: 20px;
-   text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 .today_work p {
-   font-size: 1.3em;
+  font-size: 1.3em;
 }
 
 .today_work button {
-   margin: 10px;
-   padding: 10px 20px;
-   font-size: 1.2em;
-   background-color: rgb(25, 214, 243);
-   color: #fff;
-   border-radius: 10px;
+   position: relative;
+   border: none;
+   display: inline-block;
+   padding: 15px 30px;
+   border-radius: 15px;
+   font-family: "paybooc-Light", sans-serif;
+   box-shadow: 0 15px 35px rgba(255, 2, 2, 0.2);
+   text-decoration: none;
+   font-weight: 600;
+   transition: 0.25s;
+   letter-spacing: 2px;
+   transform: scale(1.2);
+   cursor: pointer;
+ }
+
+
+.today_work button:hover {
+  background-color: #ff0000;
+}
+
+#Myroutine,
+#ChoiceWork {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #333;
+  background-color: #fff;
+}
+
+
+.minki_routine {
+  display: grid;
+}
+
+/*<h1>민기님의 루틴 추가버튼 꾸며주기 */
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+
+.w-btn-blue {
+   background-color: #6aafe6;
+   color: #d4dfe6;
+}
+.w-btn:hover {
+   letter-spacing: 2px;
+   transform: scale(1.2);
    cursor: pointer;
 }
 
-.today_work button:hover {
-   background-color: #ff0000;
+.routineAll {
+   font-size: 42px;
+   font-family: 'georgia';
+   font-weight: bold; 
+   
 }
 
-#Myroutine, #ChoiceWork {
-   margin: 20px;
-   padding: 20px;
-   border: 1px solid #333;
-   background-color: #fff;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,9 +19,9 @@ function RoutineBtnclick() {
     localStorage.setItem("key" , JSON.stringify(Routine_list))
     const saveRoutine = JSON.parse(localStorage.getItem("key"))
 
-    $Form1.innerHTML = `<strong>민기님의 루틴</strong><input id="plus_Routine" type="button" value="추가"></input>
+    $Form1.innerHTML = `<div class="minki_routine"><h2>민기님의 루틴</h2><input class="w-btn w-btn-blue" id="plus_Routine" type="button" value="추가하기"></div></input>
 
-    <p>전체 ${saveRoutine.length}개</p>
+    <p class="routineAll">전체 ${saveRoutine.length}개</p>
 
           <div id="save_Routine"> 
               <h2>루틴 목록 

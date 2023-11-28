@@ -20,3 +20,7 @@
 - [x] localstroage로 운동 저장하고 불러오기 1차 구현 
 - [x] localstroage로 운동 저장하고 불러오기 2차 구현 
 - [x] 불러오기 폼 완벽 구현 
+
+## css?
+
+- [x] css 1차 구현 
