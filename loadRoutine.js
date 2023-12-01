@@ -215,11 +215,15 @@ function stopwacth() {
     }
   
     clearworkarr.push(clearwork);
-
+    
+  // 클리어시간 로컬스토리지에저장해놓기?
+    let cleartime = JSON.parse(localStorage.getItem("clear")) || [];
+    cleartime.push(clearworkarr)
+    localStorage.setItem("clear" , JSON.stringify(cleartime))
 
   // 완료 눌린 시점 시간 사용자에게 알리기.
     alert(`운동을 완료했습니다. ${clearwork.min}분 : ${clearwork.sec}초`)
-   
+    
   }
    
 
